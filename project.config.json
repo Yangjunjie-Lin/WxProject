@@ -41,10 +41,11 @@
     "tabIndent": "insertSpaces",
     "tabSize": 2
   },
-  "libVersion": "trial",
+  "libVersion": "3.10.0",
   "packOptions": {
     "ignore": [],
     "include": []
   },
-  "appid": "wxda991fa18c8132f3"
+  "appid": "wxda991fa18c8132f3",
+  "cloudfunctionRoot": "cloudfunctions/"
 }
