@@ -1,0 +1,23 @@
+<!-- posts.wxml -->
+x<view class="container">
+  <!-- 检索栏 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      type="text" 
+      placeholder="..." 
+      bindinput="onSearchInput"
+    />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 帖子列表 -->
+  <view class="post-list">
+    <block wx:for="{{posts}}" wx:key="id">
+      <view class="post-item">
+        <text class="post-title">{{item.title}}</text>
+        <text class="post-content">{{item.content}}</text>
+      </view>
+    </block>
+  </view>
+</view>

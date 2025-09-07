@@ -14,6 +14,26 @@ Component({
     canIUseGetUserProfile: wx.canIUse('getUserProfile'),
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
   },
+
+  // =========== 【关键改动】我把 onLoad 放到了这里 ===========
+  pageLifetimes: {
+    // 页面加载时执行
+    load() {
+      // 在这里测试调用云函数
+      wx.cloud.callFunction({
+        name: 'test', // 你要调用的云函数的名字
+        env: 'cloud1-4gzy5gp72cda52fe', 
+        success: res => {
+          console.log('✅✅✅ 成功调用云函数！你的云开发环境已准备就绪！', res.result)
+        },
+        fail: err => {
+          console.error('❌❌❌ 调用云函数失败，请检查配置', err)
+        }
+      })
+    }
+  },
+  // =======================================================
+
   methods: {
     // 事件处理函数
     bindViewTap() {
@@ -47,8 +67,17 @@ Component({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+
+          // 跳转到 tabBar 页面 posts
+          wx.switchTab({
+          url: '/pages/posts/posts'
+          })
         }
       })
+    },
+    finishLogin() {
+      // 直接调用 getUserProfile
+      this.getUserProfile()
     },
   },
 })
