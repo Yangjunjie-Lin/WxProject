@@ -12,12 +12,12 @@ exports.main = async (event, context) => {
   const skip = (page - 1) * pageSize;
 
   try {
-    const posts = await db.collection('posts')
+    const posts = await db.collection('Posts')
       .aggregate()
       .lookup({
-        from: 'users',
+        from: 'Users',
         localField: 'author_id',
-        foreignField: '_openid',
+        foreignField: '_id',
         as: 'author'
       })
       .unwind('$author')

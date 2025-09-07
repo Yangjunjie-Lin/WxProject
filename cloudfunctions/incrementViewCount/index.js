@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
   const { postId } = event;
 
   try {
-    const result = await db.collection('posts').doc(postId).update({
+    const result = await db.collection('Posts').doc(postId).update({
       data: {
         view_count: _.inc(1)
       }

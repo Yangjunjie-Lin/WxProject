@@ -5,37 +5,32 @@ cloud.init({
 });
 
 const db = cloud.database();
-const _ = db.command;
-const $ = db.command.aggregate;
 
 exports.main = async (event, context) => {
   const { postId } = event;
 
   try {
-    const postDetail = await db.collection('posts')
-      .aggregate()
-      .match({
-        _id: postId
-      })
-      .lookup({
-        from: 'users',
-        localField: 'author_id',
-        foreignField: '_openid',
-        as: 'author'
-      })
-      .unwind('$author')
-      .end();
+    // 1. 获取帖子详情
+    const postResult = await db.collection('Posts').doc(postId).get();
 
-    if (postDetail.list.length === 0) {
+    if (postResult.data.length === 0) {
       return {
         success: false,
         errMsg: 'Post not found.'
       };
     }
 
+    const post = postResult.data;
+    
+    // 2. 根据 author_id 获取作者信息
+    const authorResult = await db.collection('Users').doc(post.author_id).get();
+    
+    // 3. 将作者信息合并到帖子对象中
+    post.author = authorResult.data;
+
     return {
       success: true,
-      data: postDetail.list[0]
+      data: post
     };
   } catch (err) {
     return {
