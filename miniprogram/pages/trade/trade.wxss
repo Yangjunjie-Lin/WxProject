@@ -1,0 +1,58 @@
+.container {
+  padding: 20rpx;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+}
+
+/* 输入框占大部分宽度 */
+.search-input {
+  flex: 4;
+  border: 1px solid #ddd;
+  padding: 10rpx;
+  border-radius: 10rpx;
+}
+
+/* 按钮占比小 */
+.search-btn {
+  flex: 1;
+  margin-left: 10rpx;
+  padding: 0;
+  background-color: #1890ff; /* 蓝色 */
+  color: #fff;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 60rpx; /* 高度与输入框对齐 */
+  font-size: 26rpx;
+}
+
+/* 交易列表样式 */
+.trade-list {
+  margin-top: 20rpx;
+}
+
+.trade-item {
+  border: 1px solid #eee;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fafafa;
+}
+
+.trade-title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.trade-price {
+  color: #07c160;
+  margin-bottom: 10rpx;
+}
+
+.trade-desc {
+  color: #666;
+}

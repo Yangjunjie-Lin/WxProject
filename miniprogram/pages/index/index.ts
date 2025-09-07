@@ -67,8 +67,17 @@ Component({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+
+          // 跳转到 tabBar 页面 posts
+          wx.switchTab({
+          url: '/pages/posts/posts'
+          })
         }
       })
+    },
+    finishLogin() {
+      // 直接调用 getUserProfile
+      this.getUserProfile()
     },
   },
 })

@@ -1,0 +1,52 @@
+.container {
+  padding: 20rpx;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20rpx;
+}
+
+/* 输入框 */
+.search-input {
+  flex: 4; /* 输入框占比大 */
+  border: 1px solid #ddd;
+  padding: 10rpx;
+  border-radius: 10rpx;
+}
+
+/* 按钮 */
+.search-btn {
+  flex: 1; /* 按钮占比小 */
+  margin-left: 10rpx;
+  padding: 0; /* 内边距控制高度 */
+  background-color: #1890ff; /* 蓝色按钮（我喜欢这个颜色而已，测试时就先这个吧 */
+  color: #fff;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 60rpx; /* 高度和输入框对齐，可根据需要调整 */
+  font-size: 26rpx;
+}
+
+.post-list {
+  margin-top: 20rpx;
+}
+
+.post-item {
+  border: 1px solid #eee;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  background-color: #fafafa;
+}
+
+.post-title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.post-content {
+  color: #666;
+}
