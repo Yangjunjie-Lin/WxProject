@@ -52,22 +52,140 @@
 
 .post-list {
   margin-top: 20rpx;
+  padding: 0 20rpx;
 }
 
 .post-item {
   border: 1px solid #eee;
-  border-radius: 10rpx;
-  padding: 20rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
   margin-bottom: 20rpx;
-  background-color: #fafafa;
+  background-color: #ffffff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.author-info {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.author-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin-right: 16rpx;
+  border: 1px solid #f0f0f0;
+}
+
+.author-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.author-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.author-bio {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.post-body {
+  padding: 16rpx 0;
 }
 
 .post-title {
+  font-size: 36rpx;
   font-weight: bold;
+  color: #333;
+  line-height: 1.4;
   display: block;
-  margin-bottom: 10rpx;
+  margin-bottom: 16rpx;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #f0f0f0;
+  margin: 16rpx 0;
 }
 
 .post-content {
+  font-size: 28rpx;
   color: #666;
+  line-height: 1.6;
+  display: block;
+  margin-top: 16rpx;
+  text-align: justify;
+  /* 文本超出三行显示省略号 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.post-footer {
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.post-stats {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  margin-left: 32rpx;
+}
+
+.stat-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.stat-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.loading, .no-more, .empty {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.empty {
+  margin-top: 200rpx;
+  color: #666;
+  font-size: 28rpx;
 }

@@ -1,9 +1,139 @@
 Page({
   data: {
     searchText: "",
-    posts: [
-      { id: 1, title: "欢迎来到校园圈子", content: "这是第一个帖子内容。" }
-    ]
+    posts: [],
+    loading: false,
+    page: 1,
+    pageSize: 10,
+    hasMore: true
+  },
+
+  onLoad() {
+    this.loadPosts()
+  },
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.setData({ page: 1, hasMore: true }, () => {
+      this.loadPosts(true)
+    })
+  },
+
+  // 上拉加载更多
+  onReachBottom() {
+    if (this.data.hasMore && !this.data.loading) {
+      this.loadPosts()
+    }
+  },
+
+  // 格式化时间
+  formatTime(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    
+    // 小于1分钟
+    if (diff < 60000) {
+      return '刚刚';
+    }
+    // 小于1小时
+    if (diff < 3600000) {
+      return Math.floor(diff / 60000) + '分钟前';
+    }
+    // 小于24小时
+    if (diff < 86400000) {
+      return Math.floor(diff / 3600000) + '小时前';
+    }
+    // 小于30天
+    if (diff < 2592000000) {
+      return Math.floor(diff / 86400000) + '天前';
+    }
+    
+    // 超过30天显示具体日期
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  },
+
+  // 加载帖子列表
+  async loadPosts(isPullDown = false) {
+    if (this.data.loading) return
+    
+    this.setData({ loading: true })
+    
+    try {
+      console.log('开始加载第', this.data.page, '页，每页', this.data.pageSize, '条') // 添加日志
+
+      // 调用云函数获取帖子列表
+      const { result } = await wx.cloud.callFunction({
+        name: 'getPosts',
+        data: {
+          page: this.data.page,
+          pageSize: this.data.pageSize
+        }
+      })
+
+      console.log('云函数返回结果：', result) // 添加日志
+
+      if (!result.success) {
+        throw new Error(result.errMsg || '获取帖子失败')
+      }
+
+      if (!result.data || !result.data.posts || !Array.isArray(result.data.posts)) {
+        console.error('返回的数据格式：', result);
+        throw new Error('返回的帖子数据格式不正确')
+      }
+
+      // 处理帖子数据
+      const posts = result.data.posts.map(post => {
+        // 确保create_time是数字类型
+        const timestamp = typeof post.create_time === 'object' && post.create_time.$date 
+          ? new Date(post.create_time.$date).getTime()
+          : Number(post.create_time);
+
+        return {
+          ...post,
+          create_time: this.formatTime(timestamp),
+          author: {
+            ...post.author,
+            nickname: post.author.nickname || '未知用户',
+            avatar_url: post.author.avatar_url || '../../assets/default_avatar.png',
+            bio: post.author.bio || '这个用户很懒，还没有填写简介'
+          }
+        };
+      });
+
+      console.log('处理后的帖子数据：', posts) // 添加日志
+
+      this.setData({
+        posts: isPullDown ? posts : [...this.data.posts, ...posts],
+        page: this.data.page + 1,
+        hasMore: posts.length >= this.data.pageSize, // 如果返回的数据量等于pageSize，说明可能还有更多数据
+        loading: false
+      })
+
+      if (isPullDown) {
+        wx.stopPullDownRefresh()
+      }
+
+      // 增加浏览量
+      posts.forEach(post => {
+        wx.cloud.callFunction({
+          name: 'incrementViewCount',
+          data: {
+            postId: post._id
+          }
+        }).catch(err => console.error('增加浏览量失败：', err))
+      })
+    } catch (err) {
+      console.error('加载帖子失败：', err)
+      this.setData({ loading: false })
+      wx.showToast({
+        title: '加载失败',
+        icon: 'none'
+      })
+      if (isPullDown) {
+        wx.stopPullDownRefresh()
+      }
+    }
   },
 
   // 输入框实时更新
@@ -14,10 +144,77 @@ Page({
   },
 
   // 点击搜索按钮
-  onSearch() {
-    wx.showToast({
-      title: '搜索: ' + this.data.searchText,
-      icon: 'none'
+  // 跳转到用户资料页面
+  navigateToUserProfile(e: any) {
+    const userId = e.currentTarget.dataset.userid
+    wx.navigateTo({
+      url: `/pages/user-profile/user-profile?id=${userId}`
     })
+  },
+
+  async onSearch() {
+    if (!this.data.searchText.trim()) {
+      this.setData({ page: 1 }, () => {
+        this.loadPosts(true)
+      })
+      return
+    }
+
+    this.setData({ loading: true })
+    
+    try {
+      const db = wx.cloud.database()
+      const _ = db.command
+      
+      const res = await db.collection('Posts')
+        .where(_.or([
+          {
+            title: db.RegExp({
+              regexp: this.data.searchText,
+              options: 'i'
+            })
+          },
+          {
+            content: db.RegExp({
+              regexp: this.data.searchText,
+              options: 'i'
+            })
+          }
+        ]))
+        .orderBy('create_time', 'desc')
+        .get()
+
+      // 获取作者信息
+      const authorIds = [...new Set(res.data.map(post => post.author_id))]
+      const userRes = await db.collection('Users')
+        .where({
+          _id: db.command.in(authorIds)
+        })
+        .get()
+      
+      const userMap = {}
+      userRes.data.forEach(user => {
+        userMap[user._id] = user
+      })
+
+      // 组合帖子和作者信息
+      const posts = res.data.map(post => ({
+        ...post,
+        author: userMap[post.author_id] || { nickName: '未知用户' }
+      }))
+
+      this.setData({
+        posts,
+        loading: false,
+        hasMore: false
+      })
+    } catch (err) {
+      console.error('搜索失败：', err)
+      this.setData({ loading: false })
+      wx.showToast({
+        title: '搜索失败',
+        icon: 'none'
+      })
+    }
   }
 })
