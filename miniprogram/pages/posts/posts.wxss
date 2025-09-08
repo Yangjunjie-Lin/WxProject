@@ -3,30 +3,51 @@
 }
 
 .search-bar {
+  width: 434rpx; /* 750rpx - 202rpx(左) - 214rpx(右) = 334rpx，实际应为 750-202-214=334rpx，但你要整个搜索栏居中，建议直接用 margin 控制 */
+  margin-left: 202rpx; /* 101pt = 202rpx */
+  margin-right: 214rpx; /* 107pt = 214rpx */
+  height: 108rpx; /* 54pt = 108rpx */
   display: flex;
-  flex-direction: row;
-  margin-bottom: 20rpx;
+  align-items: center;
+  background: transparent;
+  box-sizing: border-box;
 }
 
 /* 输入框 */
-.search-input {
-  flex: 4; /* 输入框占比大 */
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+  height: 48rpx; /* 24pt = 48rpx */
+  background: #fff;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
   border: 1px solid #ddd;
-  padding: 10rpx;
-  border-radius: 10rpx;
+  box-sizing: border-box;
 }
 
-/* 按钮 */
-.search-btn {
-  flex: 1; /* 按钮占比小 */
-  margin-left: 10rpx;
-  padding: 0; /* 内边距控制高度 */
-  background-color: #1890ff; /* 蓝色按钮（我喜欢这个颜色而已，测试时就先这个吧 */
-  color: #fff;
-  border-radius: 10rpx;
-  text-align: center;
-  line-height: 60rpx; /* 高度和输入框对齐，可根据需要调整 */
-  font-size: 26rpx;
+.search-input {
+  flex: 1;
+  height: 48rpx;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+/* placeholder 字体大小 */
+.search-input::placeholder {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+  display: block;
 }
 
 .post-list {
