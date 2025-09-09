@@ -216,5 +216,95 @@ Page({
         icon: 'none'
       })
     }
+  },
+
+  
+  /* 点赞/取消点赞（未接入后端）
+  这里假设每个帖子对象有一个liked字段表示当前用户是否已点赞，以及like_count表示点赞数
+  实际应用中需要根据后端返回的数据结构进行调整
+  另外，用户ID需要从登录状态或本地存储中获取，这里假设为mock-user-id
+  点赞和取消点赞的操作分别会生成事件上报，我的想法是进入后端云函数去数据库里找对应的posts让它like+1
+  并且存在该帖子的子数据库里（或者别的地方），还没有做所以这里用TODO标记
+  例如：likePost和unlikePost云函数
+  这些云函数需要更新Posts集合中的like_count字段，并在一个单独的Likes集合中记录用户的点赞行为
+  Likes集合的结构可以是：
+  {
+    _id: ObjectId,
+    userId: String,
+    postId: String,
+    actionTime: Timestamp
+  }
+  这样可以方便地查询某个用户是否对某个帖子点赞过，以及统计点赞数
+  注意：这里的实现只是前端逻辑示例，实际应用中需要根据后端设计进行调整
+  然后我还觉得应该每个用户还有个点赞记录表，然后推送posts时会去这个表里找存不存在，存在liked就是
+  true，不存在就是false（true false就可以展示不同的点赞按钮图标了）
+  其他报错细节就晚点再想吧
+  */
+  onLike(e: any) {
+    const postId = e.currentTarget.dataset.postid; // 帖子ID
+    const index = e.currentTarget.dataset.index; // 帖子索引
+    const userId = wx.getStorageSync('userId') || 'mock-user-id'; // 用户ID（从本地存储获取或mock）
+
+    // 获取当前时间
+    const actionTime = Date.now();
+
+    // 获取帖子列表
+    const posts = this.data.posts.slice();
+
+    // 判断当前帖子是否已点赞
+    if (posts[index].liked) {
+      // 取消点赞逻辑
+      const cancelFormData = {
+        userId,
+        postId,
+        actionTime, // 取消点赞时间
+      };
+
+      // TODO: 调用后端接口取消点赞
+      // wx.cloud.callFunction({
+      //   name: 'unlikePost',
+      //   data: cancelFormData,
+      // }).then(res => {
+      //   console.log('取消点赞成功', res);
+      // }).catch(err => {
+      //   console.error('取消点赞失败', err);
+      // });
+
+      // 更新本地数据
+      posts[index].liked = false;
+      posts[index].like_count = Math.max((posts[index].like_count || 1) - 1, 0); // 防止负数
+    } else {
+      // 点赞逻辑
+      const likeFormData = {
+        userId,
+        postId,
+        actionTime, // 点赞时间
+      };
+
+      // TODO: 调用后端接口添加点赞
+      // wx.cloud.callFunction({
+      //   name: 'likePost',
+      //   data: likeFormData,
+      // }).then(res => {
+      //   console.log('点赞成功', res);
+      // }).catch(err => {
+      //   console.error('点赞失败', err);
+      // });
+
+      // 更新本地数据
+      posts[index].liked = true;
+      posts[index].like_count = (posts[index].like_count || 0) + 1;
+    }
+
+    // 更新页面数据
+    this.setData({ posts });
+  },
+
+  // 跳转到帖子详情页
+  goToContent(e) {
+    const postId = e.currentTarget.dataset.postid;
+    wx.navigateTo({
+      url: `/pages/content/content?postId=${postId}`
+    });
   }
 })

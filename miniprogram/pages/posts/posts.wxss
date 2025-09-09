@@ -1,23 +1,33 @@
 .container {
-  padding: 20rpx;
+  padding: 0;
+  background: #eee;
+  min-height: 150vh;
 }
 
+/* 固定搜索栏在顶部 */
 .search-bar {
-  width: 434rpx; /* 750rpx - 202rpx(左) - 214rpx(右) = 334rpx，实际应为 750-202-214=334rpx，但你要整个搜索栏居中，建议直接用 margin 控制 */
-  margin-left: 202rpx; /* 101pt = 202rpx */
-  margin-right: 214rpx; /* 107pt = 214rpx */
-  height: 108rpx; /* 54pt = 108rpx */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  margin: 0;
+  height: 200rpx;
   display: flex;
   align-items: center;
-  background: transparent;
+  background: #ffffff;
   box-sizing: border-box;
+  border-bottom: 1rpx solid #e5e5e5; /* 分隔线 */
+  /* 可选：加阴影更明显 */
+  /* box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03); */
 }
 
-/* 输入框 */
+/* 搜索框居中，左右间距 */
 .search-input-wrapper {
-  position: relative;
-  width: 100%;
-  height: 48rpx; /* 24pt = 48rpx */
+  margin-left: 202rpx;
+  margin-right: 214rpx;
+  margin-top: 65rpx;
+  width: calc(100% - 202rpx - 214rpx);
+  height: 48rpx;
   background: #fff;
   border-radius: 40rpx;
   display: flex;
@@ -32,7 +42,7 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 30rpx;
+  font-size: 23rpx;
   box-sizing: border-box;
 }
 
@@ -150,26 +160,34 @@
 }
 
 .post-footer {
-  margin-top: 16rpx;
-  padding-top: 16rpx;
-  border-top: 1rpx solid #f0f0f0;
+  margin-top: 18rpx;
+  padding-top: 1rpx;
+
+  /*按钮和内容之间的分割线*/
+  border-top: 0rpx solid #f0f0f0;
 }
 
 .post-stats {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* 整体右对齐 */
+  padding-right: 0rpx; /* 控制整体右移的距离 */
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  margin-left: 32rpx;
+  margin-left: 32rpx; /* 图标之间的间距 */
+}
+
+.comment-item {
+  margin-left: auto; /* 评论按钮单独靠右 */
+  padding-right: 0; /* 去掉额外的右边距 */
 }
 
 .stat-icon {
-  width: 32rpx;
-  height: 32rpx;
-  margin-right: 8rpx;
+  width: 50rpx; /* 图标宽度 */
+  height: 50rpx; /* 图标高度 */
+  margin-right: 7rpx; /* 图标与文字的间距 */
 }
 
 .stat-count {

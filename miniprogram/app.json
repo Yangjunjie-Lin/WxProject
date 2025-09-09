@@ -5,7 +5,8 @@
     "pages/posts/posts",
     "pages/issue/issue",
     "pages/message/message",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/content/content"
   ],
   "window": {
     "navigationStyle": "custom",
