@@ -47,7 +47,7 @@
     color: #ccc;
   }
   
-  .menu-section {
+  .menu-section, .action-section {
     background: white;
     border-radius: 24rpx;
     padding: 40rpx;
@@ -64,7 +64,7 @@
   
   .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 30rpx;
   }
   
@@ -99,6 +99,30 @@
     border-radius: 10rpx;
     min-width: 20rpx;
     text-align: center;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 20rpx;
+  }
+  
+  .action-btn {
+    flex: 1;
+    height: 80rpx;
+    border-radius: 40rpx;
+    font-size: 32rpx;
+    border: none;
+  }
+  
+  .action-btn.primary {
+    background: #07c160;
+    color: white;
+  }
+  
+  .action-btn.secondary {
+    background: #f8f9fa;
+    color: #333;
+    border: 2rpx solid #e9ecef;
   }
   
   .logout-section {

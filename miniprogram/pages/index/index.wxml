@@ -1,26 +1,18 @@
-<!-- index.wxml -->
-<view class="userinfo">
-  <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-      <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-    </button>
-    <view class="nickname-wrapper">
-      <text class="nickname-label">昵称</text>
-      <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-    </view>
-    <!-- 始终显示完成按钮 -->
-    <button class="finish-btn" bindtap="finishLogin">完成</button>
-  </block>
+<view class="page-container">
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
 
-  <block wx:elif="{{!hasUserInfo}}">
-    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-    <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-  </block>
+  <!-- 只显示登录面板，登录成功后直接跳转 -->
+  <login-panel 
+    wx:elif="{{!isLoggedIn}}" 
+    bind:loginsuccess="onLoginSuccess"
+  ></login-panel>
 
-  <block wx:else>
-    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    <!-- 始终显示完成按钮，让用户可跳转 -->
-    <button class="finish-btn" bindtap="finishLogin">完成</button>
-  </block>
+  <!-- 已登录直接跳转，不显示内容 -->
+  <view wx:else class="redirect-container">
+    <text class="redirect-text">跳转中...</text>
+  </view>
 </view>

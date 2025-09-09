@@ -3,10 +3,13 @@ App<IAppOption>({
   globalData: {},
   onLaunch() {
     // 在 onLaunch 函数里，加入初始化代码
-    wx.cloud.init({
-      env: 'cloud1-4gzy5gp72cda52fe', // 这是你的环境ID
-      traceUser: true,
-    })
+    if (wx.cloud) {
+        wx.cloud.init({
+          env: 'cloud1-4gzy5gp72cda52fe', // 确保这个ID正确
+          traceUser: true
+        });
+        console.log('云开发初始化成功');
+      }
 
 
     // 展示本地存储能力
