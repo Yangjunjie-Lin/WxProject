@@ -3,10 +3,13 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/posts/posts",
-    "pages/trade/trade",
-    "pages/mine/mine"
+    "pages/issue/issue",
+    "pages/message/message",
+    "pages/mine/mine",
+    "pages/content/content"
   ],
   "window": {
+    "navigationStyle": "custom",
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "我的小程序",
     "navigationBarBackgroundColor": "#ffffff"
@@ -15,28 +18,34 @@
   "componentFramework": "glass-easel",
   "lazyCodeLoading": "requiredComponents",
   "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
+    "color": "#999999",
+    "selectedColor": "#FF3D3D",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/posts/posts",
-        "iconPath": "images/icons/post81px.png",
-        "selectedIconPath": "images/icons/post81px_selected.png",
-        "text": "帖子"
+        "text": "首页",
+        "iconPath": "assets/tabbar/posts_icon0.jpg",
+        "selectedIconPath": "assets/tabbar/posts_icon1.png"
       },
       {
-        "pagePath": "pages/trade/trade",
-        "iconPath": "images/icons/message81px.png",
-        "selectedIconPath": "images/icons/message81px_selected.png",
-        "text": "信息"
+        "pagePath": "pages/issue/issue",
+        "text": "发布",
+        "iconPath": "assets/tabbar/issue_icon0.jpg",
+        "selectedIconPath": "assets/tabbar/issue_icon1.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "信息",
+        "iconPath": "assets/tabbar/message_icon0.jpg",
+        "selectedIconPath": "assets/tabbar/message_icon1.png"
       },
       {
         "pagePath": "pages/mine/mine",
-        "iconPath": "images/icons/mine81px.png",
-        "selectedIconPath": "images/icons/mine81px_selected.png",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "assets/tabbar/mine_icon0.jpg",
+        "selectedIconPath": "assets/tabbar/mine_icon1.png"
       }
     ]
   },

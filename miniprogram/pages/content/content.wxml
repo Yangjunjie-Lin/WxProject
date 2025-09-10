@@ -1,0 +1,44 @@
+<view class="page">
+  <!-- 顶部栏 -->
+  <view class="header">
+    <view class="back-btn" bindtap="onBack">＜</view>
+    <image class="avatar" src="{{post.author.avatar_url}}" mode="aspectFill" />
+    <text class="name">{{post.author.nickname}}</text>
+  </view>
+
+  <!-- 内容区 -->
+  <scroll-view class="main" scroll-y="true">
+    <view class="post-detail">
+      <text class="content">{{post.content}}</text>
+    </view>
+
+    <view class="comments">
+      <text class="comments-title">评论</text>
+      <block wx:for="{{comments}}" wx:key="_id">
+        <view class="comment-item">
+          <text class="comment-author">{{item.author_nickname}}:</text>
+          <text class="comment-text">{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 底部栏 -->
+  <view class="footer">
+    <input class="comment-input" placeholder="说点什么..." />
+    <view class="footer-actions">
+      <view class="action-item">
+        <image class="icon" src="../../assets/posts/view_icon0.png" />
+        <text>{{post.view_count || 0}}</text>
+      </view>
+      <view class="action-item">
+        <image class="icon" src="{{post.liked ? '../../assets/posts/like_icon1.png' : '../../assets/posts/like_icon0.png'}}" />
+        <text>{{post.like_count || 0}}</text>
+      </view>
+      <view class="action-item">
+        <image class="icon" src="../../assets/posts/comment_icon0.png" />
+        <text>{{post.comment_count || 0}}</text>
+      </view>
+    </view>
+  </view>
+</view>
