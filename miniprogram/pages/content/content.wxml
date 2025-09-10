@@ -74,4 +74,27 @@
     </view>
   </view>
 
+  <!-- 底部评论栏 -->
+  <view class="bottom-bar">
+    <view class="comment-input-wrapper">
+      <input class="comment-input" placeholder="写下你的评论..." disabled="true"/>
+    </view>
+    <view class="post-stats">
+      <view class="stat-item">
+        <image class="stat-icon" src="../../assets/view.png" mode="aspectFit"/>
+        <text class="stat-count">{{post.view_count || 0}}</text>
+      </view>
+      <view class="stat-item">
+        <image class="stat-icon" src="../../assets/like.png" mode="aspectFit"/>
+        <text class="stat-count">{{post.like_count || 0}}</text>
+      </view>
+      <view class="stat-item">
+        <image class="stat-icon" src="../../assets/comment.png" mode="aspectFit"/>
+        <text class="stat-count">{{post.comment_count || 0}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部占位，防止内容被底栏遮挡 -->
+  <view class="bottom-placeholder"></view>
 </view>
