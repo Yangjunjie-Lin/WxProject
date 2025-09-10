@@ -1,44 +1,77 @@
-<view class="page">
-  <!-- 顶部栏 -->
-  <view class="header">
-    <view class="back-btn" bindtap="onBack">＜</view>
-    <image class="avatar" src="{{post.author.avatar_url}}" mode="aspectFill" />
-    <text class="name">{{post.author.nickname}}</text>
+<view class="container">
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar" style="margin-top: {{menuTop}}px; height: {{menuHeight}}px;">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-arrow">‹</text>
+    </view>
   </view>
 
-  <!-- 内容区 -->
-  <scroll-view class="main" scroll-y="true">
-    <view class="post-detail">
-      <text class="content">{{post.content}}</text>
-    </view>
-
-    <view class="comments">
-      <text class="comments-title">评论</text>
-      <block wx:for="{{comments}}" wx:key="_id">
-        <view class="comment-item">
-          <text class="comment-author">{{item.author_nickname}}:</text>
-          <text class="comment-text">{{item.text}}</text>
+  <!-- 帖子内容 -->
+  <view class="post-container">
+    <view class="post-card">
+      <!-- 作者信息 -->
+      <view class="author-info">
+        <image class="author-avatar" src="{{post.author.avatar_url}}" mode="aspectFill"/>
+        <view class="author-detail">
+          <text class="author-name">{{post.author.nickname}}</text>
+          <text class="author-bio">{{post.author.bio}}</text>
         </view>
-      </block>
-    </view>
-  </scroll-view>
+        <text class="post-time">{{post.create_time}}</text>
+      </view>
 
-  <!-- 底部栏 -->
-  <view class="footer">
-    <input class="comment-input" placeholder="说点什么..." />
-    <view class="footer-actions">
-      <view class="action-item">
-        <image class="icon" src="../../assets/posts/view_icon0.png" />
-        <text>{{post.view_count || 0}}</text>
+      <view class="divider"></view>
+
+      <!-- 帖子标题 -->
+      <text class="post-title">{{post.title}}</text>
+
+      <!-- 帖子内容 -->
+      <text class="post-text" user-select="true">{{post.content}}</text>
+
+      <!-- 评论区 -->
+      <view class="comments-section" wx:if="{{post.comments && post.comments.length > 0}}">
+        <view class="divider"></view>
+        <view class="comments-list">
+          <block wx:for="{{post.comments}}" wx:key="_id">
+            <!-- 只显示顶级评论 -->
+            <block wx:if="{{!item.parent_comment_id}}">
+              <view class="comment-item">
+                <view class="comment-user-info">
+                  <image class="comment-avatar" src="{{item.user.avatar_url}}" mode="aspectFill"/>
+                  <view class="comment-user-detail">
+                    <text class="comment-username">{{item.user.nickname}}</text>
+                    <text class="comment-time">{{formatTime(item.comment_time)}}</text>
+                  </view>
+                </view>
+                <view class="comment-content">
+                  <text>{{item.content}}</text>
+                </view>
+
+                <!-- 显示该顶级评论的所有回复 -->
+                <view class="sub-comments" wx:if="{{item.replies && item.replies.length > 0}}">
+                  <block wx:for="{{item.replies}}" wx:key="_id" wx:for-item="reply">
+                    <view class="comment-item sub-comment">
+                      <view class="comment-user-info">
+                        <image class="comment-avatar" src="{{reply.user.avatar_url}}" mode="aspectFill"/>
+                        <view class="comment-user-detail">
+                          <text class="comment-username">{{reply.user.nickname}}</text>
+                          <text class="comment-time">{{reply.comment_time}}</text>
+                        </view>
+                      </view>
+                      <view class="comment-content">
+                        <text wx:if="{{reply.reply_to}}" class="reply-to">@{{reply.reply_to.nickname}} </text>
+                        <text class="reply-text">{{reply.content}}</text>
+                      </view>
+                    </view>
+                  </block>
+                </view>
+              </view>
+            </block>
+          </block>
+        </view>
       </view>
-      <view class="action-item">
-        <image class="icon" src="{{post.liked ? '../../assets/posts/like_icon1.png' : '../../assets/posts/like_icon0.png'}}" />
-        <text>{{post.like_count || 0}}</text>
-      </view>
-      <view class="action-item">
-        <image class="icon" src="../../assets/posts/comment_icon0.png" />
-        <text>{{post.comment_count || 0}}</text>
-      </view>
+      <!-- 评论提示（如果没有评论） -->
+      <text class="no-comments-tip" wx:else>暂无评论</text>
     </view>
   </view>
+
 </view>

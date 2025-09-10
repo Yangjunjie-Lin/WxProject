@@ -302,9 +302,22 @@ Page({
 
   // 跳转到帖子详情页
   goToContent(e) {
-    const postId = e.currentTarget.dataset.postid;
+    let postId = e.currentTarget.dataset.postid;
+    console.log('原始帖子ID:', postId);
+    
+    // 处理可能的 ObjectId 格式
+    if (typeof postId === 'object') {
+      if (postId.$oid) {
+        postId = postId.$oid;
+      } else {
+        postId = JSON.stringify(postId);
+      }
+    }
+    
+    console.log('处理后的帖子ID:', postId);
+    
     wx.navigateTo({
-      url: `/pages/content/content?postId=${postId}`
+      url: `/pages/content/content?postId=${encodeURIComponent(postId)}`
     });
   }
 })
