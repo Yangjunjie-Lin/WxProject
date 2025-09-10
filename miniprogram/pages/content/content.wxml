@@ -81,15 +81,15 @@
     </view>
     <view class="post-stats">
       <view class="stat-item">
-        <image class="stat-icon" src="../../assets/view.png" mode="aspectFit"/>
+        <image class="stat-icon" src="../../assets/posts/view_icon0.png" mode="aspectFit"/>
         <text class="stat-count">{{post.view_count || 0}}</text>
       </view>
       <view class="stat-item">
-        <image class="stat-icon" src="../../assets/like.png" mode="aspectFit"/>
+        <image class="stat-icon" src="../../assets/posts/like_icon0.png" mode="aspectFit"/>
         <text class="stat-count">{{post.like_count || 0}}</text>
       </view>
       <view class="stat-item">
-        <image class="stat-icon" src="../../assets/comment.png" mode="aspectFit"/>
+        <image class="stat-icon" src="../../assets/posts/comment_icon0.png" mode="aspectFit"/>
         <text class="stat-count">{{post.comment_count || 0}}</text>
       </view>
     </view>
