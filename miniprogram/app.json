@@ -11,7 +11,7 @@
   "window": {
     "navigationStyle": "custom",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "我的小程序",
     "navigationBarBackgroundColor": "#ffffff"
   },
   "style": "v2",
@@ -48,5 +48,6 @@
         "selectedIconPath": "assets/tabbar/mine_icon1.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

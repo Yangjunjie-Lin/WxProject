@@ -1,4 +1,7 @@
 {
-  "usingComponents": {
+    "navigationBarTitleText": "登录",
+    "usingComponents": {
+      "login-panel": "/components/login-panel/login-panel",
+      "main-content": "/components/main-content/main-content"
+    }
   }
-}
