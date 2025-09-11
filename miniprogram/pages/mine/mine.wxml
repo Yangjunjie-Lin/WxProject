@@ -1,6 +1,42 @@
-<view class="container">
-  <image class="avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-  <text class="nickname">{{userInfo.nickName}}</text>
+<view class="main-container">
+  <!-- 用户信息区域 -->
+    <view class="user-section">
+    <view class="user-info">
+        <image 
+        class="avatar" 
+        src="{{userInfo.avatar || '/images/icons/defaultAvatar120px.png'}}" 
+        mode="aspectFill"
+        bindtap="onAvatarTap"
+        >
+        </image>
+    <view class="user-details">
+        <text class="nickname" bindtap="onNicknameTap">{{userInfo.nickname || '点击设置昵称'}}</text>
+        <text class="login-info">登录次数: {{userInfo.loginCount || 0}}</text>
+        </view>
+            <text class="arrow">></text>
+        </view>
+    </view>
 
-  <button bindtap="logout">退出登录</button>
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="section-title">功能菜单</view>
+    <view class="menu-grid">
+      <view 
+        class="menu-item" 
+        wx:for="{{menuList}}" 
+        wx:key="id"
+        data-url="{{item.url}}"
+        bindtap="navigateToPage"
+      >
+        <view class="menu-icon">{{item.icon}}</view>
+        <text class="menu-name">{{item.name}}</text>
+        <view class="menu-count" wx:if="{{item.count > 0}}">{{item.count}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-section">
+    <button class="logout-btn" bindtap="handleLogout">退出登录</button>
+  </view>
 </view>

@@ -1,52 +1,209 @@
 .container {
-  padding: 20rpx;
+  padding: 0;
+  background: #eee;
+  min-height: 150vh;
 }
 
+/* 固定搜索栏在顶部 */
 .search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  width: 100%;
+  margin: 0;
+  height: 200rpx;
   display: flex;
-  flex-direction: row;
-  margin-bottom: 20rpx;
+  align-items: center;
+  background: #ffffff;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e5e5e5; /* 分隔线 */
+  /* 可选：加阴影更明显 */
+  /* box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03); */
 }
 
-/* 输入框 */
-.search-input {
-  flex: 4; /* 输入框占比大 */
+/* 搜索框居中，左右间距 */
+.search-input-wrapper {
+  margin-left: 202rpx;
+  margin-right: 214rpx;
+  margin-top: 65rpx;
+  width: calc(100% - 202rpx - 214rpx);
+  height: 48rpx;
+  background: #fff;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
   border: 1px solid #ddd;
-  padding: 10rpx;
-  border-radius: 10rpx;
+  box-sizing: border-box;
 }
 
-/* 按钮 */
-.search-btn {
-  flex: 1; /* 按钮占比小 */
-  margin-left: 10rpx;
-  padding: 0; /* 内边距控制高度 */
-  background-color: #1890ff; /* 蓝色按钮（我喜欢这个颜色而已，测试时就先这个吧 */
-  color: #fff;
-  border-radius: 10rpx;
-  text-align: center;
-  line-height: 60rpx; /* 高度和输入框对齐，可根据需要调整 */
-  font-size: 26rpx;
+.search-input {
+  flex: 1;
+  height: 48rpx;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 23rpx;
+  box-sizing: border-box;
+}
+
+/* placeholder 字体大小 */
+.search-input::placeholder {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.search-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+  display: block;
 }
 
 .post-list {
   margin-top: 20rpx;
+  padding: 0 20rpx;
 }
 
 .post-item {
   border: 1px solid #eee;
-  border-radius: 10rpx;
-  padding: 20rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
   margin-bottom: 20rpx;
-  background-color: #fafafa;
+  background-color: #ffffff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.author-info {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.author-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  margin-right: 16rpx;
+  border: 1px solid #f0f0f0;
+}
+
+.author-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.author-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.author-bio {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.post-body {
+  padding: 16rpx 0;
 }
 
 .post-title {
+  font-size: 36rpx;
   font-weight: bold;
+  color: #333;
+  line-height: 1.4;
   display: block;
-  margin-bottom: 10rpx;
+  margin-bottom: 16rpx;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #f0f0f0;
+  margin: 16rpx 0;
 }
 
 .post-content {
+  font-size: 28rpx;
   color: #666;
+  line-height: 1.6;
+  display: block;
+  margin-top: 16rpx;
+  text-align: justify;
+  /* 文本超出三行显示省略号 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.post-footer {
+  margin-top: 18rpx;
+  padding-top: 1rpx;
+
+  /*按钮和内容之间的分割线*/
+  border-top: 0rpx solid #f0f0f0;
+}
+
+.post-stats {
+  display: flex;
+  justify-content: flex-end; /* 整体右对齐 */
+  padding-right: 0rpx; /* 控制整体右移的距离 */
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  margin-left: 32rpx; /* 图标之间的间距 */
+}
+
+.comment-item {
+  margin-left: auto; /* 评论按钮单独靠右 */
+  padding-right: 0; /* 去掉额外的右边距 */
+}
+
+.stat-icon {
+  width: 50rpx; /* 图标宽度 */
+  height: 50rpx; /* 图标高度 */
+  margin-right: 7rpx; /* 图标与文字的间距 */
+}
+
+.stat-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.loading, .no-more, .empty {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.empty {
+  margin-top: 200rpx;
+  color: #666;
+  font-size: 28rpx;
 }
